@@ -1,0 +1,16 @@
+{
+  "name": "sqlorm",
+  "version": "0.2.3",
+  "description": "ORM for sqlcmd",
+  "license": "MIT",
+  "keywords": [
+    "sqlcmd",
+    "orm",
+    "object",
+    "relational",
+    "mapping"
+  ],
+  "homepage": "https://github.com/chbrown/sqlorm",
+  "repository": "git://github.com/chbrown/sqlorm.git",
+  "author": "Christopher Brown <io@henrian.com> (http://henrian.com)"
+}
