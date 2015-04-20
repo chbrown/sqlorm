@@ -104,6 +104,23 @@ Model.insert = function(fields, callback) {
   });
 };
 
+/** Model.update(setFields: object,
+                 whereFields: object,
+                 callback: (error: Error, row: object)
+
+Update record(s) with the given fields, returning the first result.
+*/
+Model.update = function(setFields, whereFields, callback) {
+  this.db.Update(this.table)
+  .setEqual(setFields)
+  .whereEqual(whereFields)
+  .execute(function(err, rows) {
+    if (err) return callback(err);
+
+    callback(null, rows[0]);
+  });
+};
+
 /** Model.delete(whereEqual_obj: object,
                  callback: (error?: Error))
 
