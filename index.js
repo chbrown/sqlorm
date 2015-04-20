@@ -23,7 +23,7 @@ following properties defined directly on the class:
 * columns: string[]
 
 */
-var Model = {}; // this constructor should never actually be called
+var Model = exports.Model = {}; // this constructor should never actually be called
 
 /** Model.all(whereEqual_obj: object,
               callback: (error: Error, records: T[]))
