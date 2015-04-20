@@ -25,17 +25,17 @@ following properties defined directly on the class:
 */
 var Model = exports.Model = {}; // this constructor should never actually be called
 
-/** Model.all(whereEqual_obj: object,
+/** Model.all(whereFields: object,
               callback: (error: Error, records: T[]))
 
 Find all records that precisely match pattern.
 
 Be careful! Susceptible to injection: pattern's keys are not escaped.
 */
-Model.all = function(whereEqual_obj, callback) {
+Model.all = function(whereFields, callback) {
   var Model = this;
   this.db.Select(Model.table)
-  .whereEqual(whereEqual_obj)
+  .whereEqual(whereFields)
   .execute(function(err, rows) {
     if (err) return callback(err);
 
@@ -47,18 +47,18 @@ Model.all = function(whereEqual_obj, callback) {
   });
 };
 
-/** Model.first(whereEqual_obj: object,
+/** Model.first(whereFields: object,
                 callback: (error: Error, record: T))
 
 Find the first record that matches pattern, or null.
 
 Susceptible to injection: pattern's keys are not escaped.
 */
-Model.first = function(whereEqual_obj, callback) {
+Model.first = function(whereFields, callback) {
   var Model = this;
   this.db.Select(this.table)
   .limit(1)
-  .whereEqual(whereEqual_obj)
+  .whereEqual(whereFields)
   .execute(function(err, rows) {
     if (err) return callback(err, null);
     if (rows.length === 0) return callback(null, null);
@@ -68,7 +68,7 @@ Model.first = function(whereEqual_obj, callback) {
   });
 };
 
-/** Model.one(whereEqual_obj: object,
+/** Model.one(whereFields: object,
               callback: (error: Error, record?: T))
 
 Like Model.first(), finds the first record that matches pattern, but calls back
@@ -76,9 +76,9 @@ with an error if nothing can be found.
 
 Susceptible to injection: pattern's keys are not escaped.
 */
-Model.one = function(whereEqual_obj, callback) {
+Model.one = function(whereFields, callback) {
   var Model = this;
-  this.first(whereEqual_obj, function(err, record) {
+  this.first(whereFields, function(err, record) {
     if (err) return callback(err);
     if (record === null) {
       var message = 'Could not find match in ' + Model.table + '.';
@@ -89,14 +89,14 @@ Model.one = function(whereEqual_obj, callback) {
   });
 };
 
-/** Model.insert(obj: object,
+/** Model.insert(setFields: object,
                  callback: (error: Error, row: Object)
 
-Insert single record with the given fields.
+Insert single record with the given fields, returning the first result.
 */
-Model.insert = function(fields, callback) {
+Model.insert = function(setFields, callback) {
   this.db.Insert(this.table)
-  .set(fields)
+  .set(setFields)
   .execute(function(err, rows) {
     if (err) return callback(err);
 
@@ -121,14 +121,14 @@ Model.update = function(setFields, whereFields, callback) {
   });
 };
 
-/** Model.delete(whereEqual_obj: object,
+/** Model.delete(whereFields: object,
                  callback: (error?: Error))
 
 Delete the records matching the given pattern.
 */
-Model.delete = function(pattern, callback) {
+Model.delete = function(whereFields, callback) {
   this.db.Delete(this.table)
-  .whereEqual(pattern)
+  .whereEqual(whereFields)
   .execute(callback);
 };
 
