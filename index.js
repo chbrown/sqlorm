@@ -1,5 +1,3 @@
-/*jslint node: true */
-
 function extend(target, source) {
   for (var key in source) {
     if (source.hasOwnProperty(key)) {
